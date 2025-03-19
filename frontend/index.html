@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Tracker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="financeApp" ng-controller="FinanceController">
+
+    <h2>Finance Tracker</h2>
+    <form ng-submit="addExpense()">
+        <input type="text" ng-model="expense.name" placeholder="Expense Name" required>
+        <input type="number" ng-model="expense.amount" placeholder="Amount" required>
+        <button type="submit">Add Expense</button>
+    </form>
+
+    <ul>
+        <li ng-repeat="exp in expenses">{{ exp.name }} - ${{ exp.amount }}</li>
+    </ul>
+
+    <script>
+        var app = angular.module('financeApp', []);
+        app.controller('FinanceController', function($scope, $http) {
+            $scope.expenses = [];
+            $scope.expense = {};
+
+            $scope.addExpense = function() {
+                if ($scope.expense.name && $scope.expense.amount) {
+                    $scope.expenses.push({ name: $scope.expense.name, amount: $scope.expense.amount });
+                    $scope.expense = {};
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
